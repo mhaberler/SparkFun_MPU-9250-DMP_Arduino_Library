@@ -27,6 +27,9 @@ Supported Platforms:
 #define AK8963_SECONDARY
 #define COMPASS_ENABLED
 
+// gross haque to make i2c bus configurable
+extern TwoWire *__mpwire;
+
 // Include the Invensense MPU9250 driver and DMP keys:
 extern "C" {
 #include "util/inv_mpu.h"

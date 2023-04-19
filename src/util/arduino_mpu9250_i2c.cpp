@@ -19,31 +19,30 @@ Supported Platforms:
 #include <Arduino.h>
 #include <Wire.h>
 
+TwoWire *__mpwire;
+
 int arduino_i2c_write(unsigned char slave_addr, unsigned char reg_addr,
-                       unsigned char length, unsigned char * data)
-{
-	Wire.beginTransmission(slave_addr);
-	Wire.write(reg_addr);
-	for (unsigned char i = 0; i < length; i++)
-	{
-		Wire.write(data[i]);
-	}
-	Wire.endTransmission(true);
-	
-	return 0;
+                      unsigned char length, unsigned char *data) {
+  __mpwire->beginTransmission(slave_addr);
+  __mpwire->write(reg_addr);
+  for (unsigned char i = 0; i < length; i++) {
+    __mpwire->write(data[i]);
+  }
+  __mpwire->endTransmission(true);
+
+  return 0;
 }
 
 int arduino_i2c_read(unsigned char slave_addr, unsigned char reg_addr,
                        unsigned char length, unsigned char * data)
 {
-	Wire.beginTransmission(slave_addr);
-	Wire.write(reg_addr);
-	Wire.endTransmission(false);
-	Wire.requestFrom(slave_addr, length);
-	for (unsigned char i = 0; i < length; i++)
-	{
-		data[i] = Wire.read();
-	}
-	
-	return 0;
+  __mpwire->beginTransmission(slave_addr);
+  __mpwire->write(reg_addr);
+  __mpwire->endTransmission(false);
+  __mpwire->requestFrom(slave_addr, length);
+  for (unsigned char i = 0; i < length; i++) {
+    data[i] = __mpwire->read();
+  }
+
+        return 0;
 }

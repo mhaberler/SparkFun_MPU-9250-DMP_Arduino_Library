@@ -40,22 +40,22 @@ inv_error_t MPU9250_DMP::begin(void)
 {
 	inv_error_t result;
     struct int_param_s int_param;
-	
-	Wire.begin();
-	
-	result = mpu_init(&int_param);
-	
-	if (result)
-		return result;
-	
-	mpu_set_bypass(1); // Place all slaves (including compass) on primary bus
-	
-	setSensors(INV_XYZ_GYRO | INV_XYZ_ACCEL | INV_XYZ_COMPASS);
-	
-	_gSense = getGyroSens();
-	_aSense = getAccelSens();
-	
-	return result;
+
+    __mpwire->begin();
+
+    result = mpu_init(&int_param);
+
+    if (result)
+      return result;
+
+    mpu_set_bypass(1); // Place all slaves (including compass) on primary bus
+
+    setSensors(INV_XYZ_GYRO | INV_XYZ_ACCEL | INV_XYZ_COMPASS);
+
+    _gSense = getGyroSens();
+    _aSense = getAccelSens();
+
+    return result;
 }
 
 inv_error_t MPU9250_DMP::enableInterrupt(unsigned char enable)
