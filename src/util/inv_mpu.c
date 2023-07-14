@@ -40,16 +40,19 @@
 #define MPU9250
 #include "arduino_mpu9250_i2c.h"
 #include "arduino_mpu9250_clk.h"
+// #include "arduino_mpu9250_log.h"
 #define i2c_write(a, b, c, d) arduino_i2c_write(a, b, c, d)
 #define i2c_read(a, b, c, d)  arduino_i2c_read(a, b, c, d)
 #define delay_ms  arduino_delay_ms
 #define get_ms    arduino_get_clock_ms
-#define log_i     _MLPrintLog
-#define log_e     _MLPrintLog 
+// #undef log_i
+// #define log_i     _MLPrintLog
+// #undef log_e
+// #define log_e     _MLPrintLog 
 #define min       _min
 static inline int reg_int_cb(struct int_param_s *int_param)
 {
-	
+	return 0;
 }
 
 #if !defined MPU6050 && !defined MPU9150 && !defined MPU6500 && !defined MPU9250

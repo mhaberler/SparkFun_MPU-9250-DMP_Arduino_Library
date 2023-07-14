@@ -39,8 +39,12 @@
 #define i2c_read(a, b, c, d)  arduino_i2c_read(a, b, c, d)
 #define delay_ms  arduino_delay_ms
 #define get_ms    arduino_get_clock_ms
+#ifndef log_i
 #define log_i     _MLPrintLog
+#endif
+#ifndef log_e
 #define log_e     _MLPrintLog
+#endif
 
 /* These defines are copied from dmpDefaultMPU6050.c in the general MPL
  * releases. These defines may change for each DMP image, so be sure to modify
@@ -602,7 +606,11 @@ int dmp_set_accel_bias(long *bias)
 
     mpu_get_accel_sens(&accel_sens);
     accel_sf = (long long)accel_sens << 15;
+#ifdef ESP32
+    NOP();
+#else
     __no_operation();
+#endif
 
     accel_bias_body[0] = bias[dmp.orient & 3];
     if (dmp.orient & 4)
